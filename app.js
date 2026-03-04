@@ -5,9 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-  res.send("DevOps CI/CD Pipeline is running successfully 🚀");
+  res.send("Hello! this is varshini's devops project 🚀");
 });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
