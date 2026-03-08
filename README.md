@@ -1,81 +1,139 @@
-# DevOps CI/CD Project 🚀
+🚀 Production-Ready DevOps CI/CD Pipeline with Docker Deployment and Real-Time Monitoring
 
-![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)# DevOps CI/CD Project 🚀
+This project demonstrates a production-style DevOps workflow that includes CI/CD automation, containerization, cloud deployment, and real-time system monitoring.
 
-![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)
+---
 
-This project demonstrates a complete DevOps pipeline using modern tools.
+📌 Project Overview
 
-https://devops-ci-cd-project-6.onrender.com
+The goal of this project is to simulate a real DevOps pipeline used in modern software systems.
+It automatically builds, tests, packages, deploys, and monitors a Node.js application.
 
-## DevOps Architecture
+When code is pushed to the repository, the CI/CD pipeline automatically:
+
+- Builds the application
+- Runs tests
+- Creates a Docker container
+- Pushes the container image
+- Deploys the application to the cloud
+
+The system also provides a real-time monitoring dashboard showing server metrics.
+
+---
+
+🏗 DevOps Architecture
+
 Developer
-↓
-Git Push
-↓
+   │
+   │ Git Push
+   ▼
 GitHub Repository
-↓
-GitHub Actions CI Pipeline
-↓
-Docker Container
-↓
-Cloud Deployment
-↓
-Monitoring System
+   │
+   │ Trigger CI Pipeline
+   ▼
+GitHub Actions
+   │
+   │ Build & Test Application
+   ▼
+Docker Image Build
+   │
+   │ Push Image
+   ▼
+Docker Hub Registry
+   │
+   │ Deploy
+   ▼
+Render Cloud Server
+   │
+   ▼
+Node.js Application
+   │
+   ▼
+Monitoring Dashboard
 
-Where I should add this
-Developer pushes code to GitHub.
+---
 
-GitHub Actions automatically triggers the CI pipeline.
+⚙️ Technologies Used
 
-The pipeline builds the application and containerizes it using Docker.
-
-The application is deployed to Render cloud hosting.
-
-Users can access the live application through the public URL.
-
-## Devops skills 
-
-CI/CD        → GitHub Actions
-Containers   → Docker
-Cloud        → Render
-Monitoring   → Metrics API
-Backend      → Node.js + Express
-Versioning   → Git
-## Technologies Used
 - Node.js
 - Express.js
+- Git
+- GitHub
+- GitHub Actions (CI/CD)
 - Docker
-- GitHub Actions
-- Render
+- Docker Hub
+- Render Cloud Platform
+- Chart.js (Monitoring Dashboard)
 
-## CI/CD Pipeline
+---
 
-Code Push
-↓
-GitHub Repository
-↓
-GitHub Actions (CI Pipeline)
-↓
-Build Application
-↓
-Deploy to Render
-↓
-Live Application
+🔄 DevOps Workflow
 
-## API Endpoints
+Code Development
+      ↓
+Git Version Control
+      ↓
+Push to GitHub Repository
+      ↓
+GitHub Actions CI Pipeline
+      ↓
+Build Docker Container
+      ↓
+Push Image to Docker Hub
+      ↓
+Deploy Application on Render
+      ↓
+Monitoring Dashboard Displays Metrics
 
-/        → Main page  
-/status  → Server status  
-/health  → Health monitoring  
-/version → Deployment version  
-/metrics → System metrics  
+---
 
-## Live Application
+📊 Monitoring Features
+
+The application includes several monitoring endpoints.
+
+Endpoint| Description
+"/status"| Server status
+"/health"| Health check
+"/metrics"| System metrics (CPU, memory, uptime)
+"/requests"| Total request counter
+"/request-stats"| Request traffic history
+"/dashboard"| Real-time monitoring dashboard
+"/version"| Deployment version information
+
+---
+
+📈 Dashboard Features
+
+The monitoring dashboard displays:
+
+- Server uptime
+- CPU core count
+- Node.js version
+- Memory usage graph
+- Request traffic graph
+- System platform
+
+---
+
+🌐 Live Application
 
 https://devops-ci-cd-project-6.onrender.com
 
-## Author
+---
 
-Varshini Gowda  
-BCA Student – DevOps Enthusiast 🚀
+👩‍💻 Author
+
+Varshini Gowda
+BCA Student – DevOps Enthusiast
+
+---
+
+⭐ Project Purpose
+
+This project demonstrates how modern DevOps systems automate:
+
+- Continuous Integration
+- Continuous Deployment
+- Containerized applications
+- Cloud infrastructure
+- Monitoring and observability
