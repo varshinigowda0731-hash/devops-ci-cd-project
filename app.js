@@ -1,3 +1,4 @@
+const VERSION = "1.1.0";
 const express = require("express");
 const app = express();
 
@@ -46,3 +47,4 @@ app.get("/metrics", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
