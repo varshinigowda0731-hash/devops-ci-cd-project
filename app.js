@@ -48,7 +48,39 @@ app.get("/metrics", (req, res) => {
   });
 });
 
+app.get("/info", (req, res) => {
+  res.json({
+    service: "Varshini DevOps Project",
+    deployed_on: "Render",
+    ci: "GitHub Actions",
+    runtime: process.version
+  });
+});
+
+let requestCount = 0;
+
+app.use((req, res, next) => {
+  requestCount++;
+  next();
+});
+
+app.get("/requests", (req, res) => {
+  res.json({
+    total_requests: requestCount
+  });
+});
+
+app.get("/dashboard", (req, res) => {
+  res.json({
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    platform: process.platform,
+    node: process.version
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
