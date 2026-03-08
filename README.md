@@ -1,51 +1,30 @@
-🚀 ## Production-Ready DevOps CI/CD Pipeline 
-    Docker, Cloud Hosting & Real-Time Monitoring
+🚀 Production-Style DevOps Platform
+
+CI/CD Pipeline • Docker Containerization • Cloud Hosting • Real-Time Monitoring
 
 "CI" (https://img.shields.io/badge/CI-GitHub%20Actions-blue)
 "Docker" (https://img.shields.io/badge/Container-Docker-blue)
 "Cloud" (https://img.shields.io/badge/Cloud-Render-purple)
 "Node" (https://img.shields.io/badge/Backend-Node.js-green)
-"License" (https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
 📌 Project Overview
 
-This project demonstrates a production-style DevOps workflow that automates building, containerizing, deploying, and monitoring a cloud application.
+This project demonstrates a real DevOps workflow used in modern software systems.
 
-The system integrates Continuous Integration, Containerization, Cloud Hosting, and Monitoring.
+The system automates the entire lifecycle of an application:
 
-Whenever code is pushed to the repository, the system automatically:
+- Continuous Integration (CI)
+- Containerization
+- Cloud Deployment
+- Monitoring & Observability
 
-- Runs the CI pipeline
-- Builds the application
-- Creates a Docker container
-- Pushes the container image
-- Deploys the application to the cloud
-- Provides a real-time monitoring dashboard
+Whenever new code is pushed, the pipeline automatically builds, packages, and deploys the application.
 
 ---
 
-☁️ Cloud Hosting
-
-The application is deployed on the cloud using Render.
-
-Cloud hosting allows the application to run on remote servers and be accessible from anywhere through the internet.
-
-Cloud deployment benefits include:
-
-- Global accessibility
-- Scalable infrastructure
-- High availability
-- Automated deployments
-
-Cloud platform used:
-
-- Render (Cloud Hosting)
-
----
-
-🏗 DevOps Architecture
+🏗 DevOps System Architecture
 
 Developer
    │
@@ -53,19 +32,21 @@ Developer
    ▼
 GitHub Repository
    │
-   │ Trigger CI Pipeline
+   │ CI Pipeline Trigger
    ▼
 GitHub Actions
    │
-   │ Build & Test
+   │ Install Dependencies
+   │ Run Tests
+   │ Build Application
    ▼
-Docker Container
+Docker Image
    │
-   │ Push Image
+   │ Push Container
    ▼
-Docker Hub
+Docker Hub Registry
    │
-   │ Deploy
+   │ Pull Image
    ▼
 Render Cloud Hosting
    │
@@ -83,65 +64,82 @@ Category| Technology
 Backend| Node.js, Express.js
 Version Control| Git
 Repository| GitHub
-CI/CD Pipeline| GitHub Actions
+CI/CD| GitHub Actions
 Containerization| Docker
 Container Registry| Docker Hub
 Cloud Hosting| Render
-Monitoring UI| Chart.js
+Monitoring Dashboard| Chart.js
 
 ---
 
 🔄 DevOps Workflow
 
-Write Code
-   ↓
+Code Development
+      ↓
 Git Version Control
-   ↓
-Push to GitHub
-   ↓
-CI Pipeline Runs
-   ↓
-Docker Container Built
-   ↓
-Image Stored in Docker Hub
-   ↓
-Application Deployed to Render Cloud
-   ↓
-Monitoring Dashboard Displays System Metrics
+      ↓
+Push Code to GitHub
+      ↓
+CI Pipeline Executes
+      ↓
+Build Docker Container
+      ↓
+Push Image to Docker Hub
+      ↓
+Deploy Application to Cloud
+      ↓
+Monitoring Dashboard Tracks System
 
 ---
 
-📊 Monitoring APIs
+☁️ Cloud Deployment
 
-The project includes several monitoring endpoints.
+The application is hosted on Render Cloud.
 
-Endpoint| Description
-/status| Server status
-/health| Health check
-/metrics| System metrics (CPU, memory, uptime)
-/requests| Request counter
-/request-stats| Request traffic history
-/dashboard| Monitoring dashboard
-/version| Deployment version
+Cloud deployment allows the application to be accessed globally and ensures reliable hosting infrastructure.
+
+Benefits of cloud hosting include:
+
+- global accessibility
+- automated deployments
+- scalable infrastructure
+- high availability
+
+---
+
+📊 Monitoring & Observability
+
+The system provides monitoring APIs for observing application performance.
+
+Endpoint| Purpose
+/status| server status
+/health| application health
+/metrics| system metrics
+/requests| total request count
+/request-stats| request traffic history
+/dashboard| monitoring dashboard
+/version| deployment version
 
 ---
 
 📈 Monitoring Dashboard
 
-The dashboard provides real-time observability including:
+The monitoring dashboard displays real-time metrics such as:
 
-- Server uptime
-- CPU cores
+- server uptime
+- CPU core count
 - Node.js runtime version
-- Memory usage graph
-- Request traffic graph
-- System platform
+- memory usage graph
+- request traffic graph
+- system platform
 
-This simulates a DevOps monitoring system used in production environments.
+This simulates monitoring systems used in production environments.
 
 ---
 
 🌐 Live Application
+
+Application URL
 
 https://devops-ci-cd-project-6.onrender.com
 
@@ -151,31 +149,27 @@ https://devops-ci-cd-project-6.onrender.com/dashboard
 
 ---
 
-⭐ DevOps Features
+⭐ Key DevOps Features
 
 - Automated CI/CD pipeline
-- Docker container deployment
+- Docker containerized application
 - Cloud hosting deployment
 - Real-time monitoring dashboard
-- System metrics and observability
-- Request traffic monitoring
-- Deployment version tracking
+- system metrics and observability
+- request traffic monitoring
+- deployment version tracking
 
 ---
 
 👩‍💻 Author
 
 Varshini Gowda
-BCA Student – DevOps Enthusiast 🚀
+BCA Student – DevOps Enthusiast
 
 ---
 
-📚 Purpose of the Project
+📚 Purpose
 
-This project demonstrates how modern DevOps systems automate software delivery using:
+This project demonstrates how DevOps practices automate software delivery using modern tools such as Git, CI/CD pipelines, containers, and cloud infrastructure.
 
-- Continuous Integration
-- Continuous Deployment
-- Containerization
-- Cloud Infrastructure
-- Monitoring & Observability
+The goal is to simulate a real production DevOps system used in modern software engineering environments.
