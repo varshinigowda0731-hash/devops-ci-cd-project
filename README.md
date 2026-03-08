@@ -1,3 +1,13 @@
+# DevOps CI/CD Project 🚀
+
+![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)# DevOps CI/CD Project 🚀
+
+![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)
+
+This project demonstrates a complete DevOps pipeline using modern tools.
+
+https://devops-ci-cd-project-6.onrender.com
+
 ## DevOps Architecture
 Developer
 ↓
@@ -39,15 +49,6 @@ Docker Build
 Render Deployment
    ↓
 Live Application
-# DevOps CI/CD Project 🚀
-
-![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)# DevOps CI/CD Project 🚀
-
-![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)
-
-This project demonstrates a complete DevOps pipeline using modern tools.
-
-https://devops-ci-cd-project-6.onrender.com
 
 DevOps Skills
 
