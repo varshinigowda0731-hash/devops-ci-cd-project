@@ -44,8 +44,14 @@ app.get("/version", (req, res) => {
 
 // Metrics route
 app.get("/metrics", (req, res) => {
+  const memory = process.memoryUsage();
+
   res.json({
-    memory_usage: process.memoryUsage(),
+    memory_usage: {
+      rss: memory.rss,
+      heapUsed: memory.heapUsed,
+      heapTotal: memory.heapTotal
+    },
     uptime: process.uptime(),
     platform: process.platform,
     node_version: process.version
@@ -72,59 +78,95 @@ app.get("/requests", (req, res) => {
 // Dashboard route
 app.get("/dashboard", (req, res) => {
   res.send(`
-    <html>
-      <head>
-        <title>DevOps Dashboard</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 40px;
-          }
-          .card {
-            background: #1e293b;
-            padding: 20px;
-            margin: 15px;
-            border-radius: 10px;
-            display: inline-block;
-            width: 250px;
-          }
-          h1 {
-            color: #38bdf8;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>🚀 DevOps Monitoring Dashboard</h1>
+  <html>
+  <head>
+    <title>DevOps Monitoring Dashboard</title>
+    <style>
+      body{
+        font-family: Arial;
+        background:#0f172a;
+        color:white;
+        text-align:center;
+        padding:40px;
+      }
+      .container{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+      }
+      .card{
+        background:#1e293b;
+        padding:20px;
+        margin:15px;
+        border-radius:10px;
+        width:220px;
+      }
+      h1{
+        color:#38bdf8;
+      }
+    </style>
+  </head>
 
-        <div class="card">
-          <h2>Uptime</h2>
-          <p>${process.uptime().toFixed(2)} seconds</p>
-        </div>
+  <body>
 
-        <div class="card">
-          <h2>Platform</h2>
-          <p>${process.platform}</p>
-        </div>
+  <h1>🚀 DevOps Monitoring Dashboard</h1>
 
-        <div class="card">
-          <h2>Node Version</h2>
-          <p>${process.version}</p>
-        </div>
+  <div class="container">
+    <div class="card">
+      <h3>Uptime</h3>
+      <p id="uptime">Loading...</p>
+    </div>
 
-        <div class="card">
-          <h2>Total Requests</h2>
-          <p>${requestCount}</p>
-        </div>
+    <div class="card">
+      <h3>Platform</h3>
+      <p id="platform">Loading...</p>
+    </div>
 
-      </body>
-    </html>
+    <div class="card">
+      <h3>Node Version</h3>
+      <p id="node">Loading...</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Requests</h3>
+      <p id="requests">Loading...</p>
+    </div>
+  </div>
+
+<script>
+
+async function updateDashboard(){
+  const metrics = await fetch('/metrics');
+  const data = await metrics.json();
+
+  const requests = await fetch('/requests');
+  const rdata = await requests.json();
+
+  document.getElementById("uptime").innerText =
+      data.uptime.toFixed(2) + " seconds";
+
+  document.getElementById("platform").innerText =
+      data.platform;
+
+  document.getElementById("node").innerText =
+      data.node_version;
+
+  document.getElementById("requests").innerText =
+      rdata.total_requests;
+}
+
+updateDashboard();
+setInterval(updateDashboard,3000);
+
+</script>
+
+  </body>
+  </html>
   `);
 });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
