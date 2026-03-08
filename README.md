@@ -1,5 +1,7 @@
 # DevOps CI/CD Project 🚀
 
+![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)# DevOps CI/CD Project 🚀
+
 ![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)
 
 This project demonstrates a complete DevOps pipeline using modern tools.
