@@ -4,14 +4,18 @@ const app = express();
 const PORT = process.env.PORT || 10000;
 const VERSION = "1.1.0";
 
+let requestCount = 0;
+
+// Logging + request counter middleware
 app.use((req, res, next) => {
+  requestCount++;
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   next();
 });
 
 // Root route
 app.get("/", (req, res) => {
-  res.send("Devops CI Verified 🚀");
+  res.send("DevOps CI Verified 🚀");
 });
 
 // Status route
@@ -48,6 +52,7 @@ app.get("/metrics", (req, res) => {
   });
 });
 
+// Info route
 app.get("/info", (req, res) => {
   res.json({
     service: "Varshini DevOps Project",
@@ -57,19 +62,14 @@ app.get("/info", (req, res) => {
   });
 });
 
-let requestCount = 0;
-
-app.use((req, res, next) => {
-  requestCount++;
-  next();
-});
-
+// Request counter route
 app.get("/requests", (req, res) => {
   res.json({
     total_requests: requestCount
   });
 });
 
+// Dashboard route
 app.get("/dashboard", (req, res) => {
   res.json({
     uptime: process.uptime(),
@@ -82,5 +82,3 @@ app.get("/dashboard", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
