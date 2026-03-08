@@ -1,5 +1,19 @@
 ## DevOps Architecture
+Developer
+↓
+Git Push
+↓
+GitHub Repository
+↓
+GitHub Actions CI Pipeline
+↓
+Docker Container
+↓
+Cloud Deployment
+↓
+Monitoring System
 
+Where I should add this
 Developer pushes code to GitHub.
 
 GitHub Actions automatically triggers the CI pipeline.
@@ -33,6 +47,16 @@ Live Application
 
 This project demonstrates a complete DevOps pipeline using modern tools.
 
+https://devops-ci-cd-project-6.onrender.com
+
+DevOps Skills
+
+CI/CD        → GitHub Actions
+Containers   → Docker
+Cloud        → Render
+Monitoring   → Metrics API
+Backend      → Node.js + Express
+Versioning   → Git
 ## Technologies Used
 - Node.js
 - Express.js
