@@ -34,7 +34,7 @@ The application is deployed to Render cloud hosting.
 
 Users can access the live application through the public URL.
 
-*DevOps Skills*
+#Devops skills 
 
 CI/CD        → GitHub Actions
 Containers   → Docker
