@@ -1,48 +1,43 @@
-const express = require("express");
-const app = express();
+# DevOps CI/CD Project 🚀
 
-const PORT = process.env.PORT || 10000;
-const VERSION = "1.0.0"; // you can update this on each release
+![DevOps CI Pipeline](https://github.com/varshinigowda0731-hash/devops-ci-cd-project/actions/workflows/ci.yml/badge.svg)
 
-// Root route
-app.get("/", (req, res) => {
-  res.send("CI test successful - Varshini's DevOps Project 🚀");
-});
+This project demonstrates a complete DevOps pipeline using modern tools.
 
-// Status route
-app.get("/status", (req, res) => {
-  res.send("Server status: Running successfully 🚀");
-});
+## Technologies Used
+- Node.js
+- Express.js
+- Docker
+- GitHub Actions
+- Render
 
-// Health route
-app.get("/health", (req, res) => {
-  res.json({
-    status: "OK",
-    service: "Varshini DevOps Project",
-    time: new Date(),
-    uptime: process.uptime()
-  });
-});
+## CI/CD Pipeline
 
-// Version route
-app.get("/version", (req, res) => {
-  res.json({
-    version: VERSION,
-    deployed_at: new Date(),
-    service: "Varshini DevOps Project"
-  });
-});
+Code Push
+↓
+GitHub Repository
+↓
+GitHub Actions (CI Pipeline)
+↓
+Build Application
+↓
+Deploy to Render
+↓
+Live Application
 
-// Metrics route
-app.get("/metrics", (req, res) => {
-  res.json({
-    memory_usage: process.memoryUsage(),
-    uptime: process.uptime(),
-    platform: process.platform,
-    node_version: process.version
-  });
-});
+## API Endpoints
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+/        → Main page  
+/status  → Server status  
+/health  → Health monitoring  
+/version → Deployment version  
+/metrics → System metrics  
+
+## Live Application
+
+https://devops-ci-cd-project-6.onrender.com
+
+## Author
+
+Varshini Gowda  
+BCA Student – DevOps Enthusiast 🚀
