@@ -11,7 +11,7 @@ app.use((req, res, next) => {
 
 // Root route
 app.get("/", (req, res) => {
-  res.send("CI test successful - Varshini's DevOps Project 🚀");
+  res.send("Devops CI Verified 🚀");
 });
 
 // Status route
@@ -51,3 +51,4 @@ app.get("/metrics", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
