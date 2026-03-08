@@ -34,22 +34,6 @@ The application is deployed to Render cloud hosting.
 
 Users can access the live application through the public URL.
 
-Architecture Flow:
-
-Developer
-   ↓
-Git Push
-   ↓
-GitHub Repository
-   ↓
-GitHub Actions (CI)
-   ↓
-Docker Build
-   ↓
-Render Deployment
-   ↓
-Live Application
-
 DevOps Skills
 
 CI/CD        → GitHub Actions
