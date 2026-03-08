@@ -1,13 +1,14 @@
-const VERSION = "1.1.0";
 const express = require("express");
 const app = express();
 
 const PORT = process.env.PORT || 10000;
-const VERSION = "1.0.0"; // you can update this on each release
+const VERSION = "1.1.0";
+
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   next();
 });
+
 // Root route
 app.get("/", (req, res) => {
   res.send("CI test successful - Varshini's DevOps Project 🚀");
@@ -50,5 +51,3 @@ app.get("/metrics", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
