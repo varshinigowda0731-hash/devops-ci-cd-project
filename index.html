@@ -1,1 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sarvodaya Institute of Graduate Studies - Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+display:flex;
+background:#f4f6f9;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:230px;
+background:#1f2d3d;
+color:white;
+height:100vh;
+padding-top:20px;
+}
+
+.sidebar h2{
+text-align:center;
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+padding:14px;
+color:white;
+text-decoration:none;
+}
+
+.sidebar a:hover{
+background:#3c4b5d;
+}
+
+/* Main */
+
+.main{
+flex:1;
+padding:20px;
+}
+
+/* Header */
+
+.header{
+background:white;
+padding:15px;
+border-radius:6px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+margin-bottom:20px;
+}
+
+/* Cards */
+
+.cards{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.card{
+background:white;
+padding:20px;
+width:200px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.card h2{
+margin-bottom:5px;
+}
+
+/* Chart */
+
+.chart-box{
+background:white;
+margin-top:30px;
+padding:20px;
+border-radius:6px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>Admin Panel</h2>
+
+<a href="#">Dashboard</a>
+<a href="#">Students</a>
+<a href="#">Faculty</a>
+<a href="#">Courses</a>
+<a href="#">Departments</a>
+<a href="#">Admissions</a>
+<a href="#">Notices</a>
+<a href="#">Gallery</a>
+<a href="#">Settings</a>
+
+</div>
+
+<!-- Main Area -->
+
+<div class="main">
+
+<div class="header">
+
+<h1>Sarvodaya Institute of Graduate Studies</h1>
+<p>College Monitoring Dashboard</p>
+
+</div>
+
+<!-- Cards -->
+
+<div class="cards">
+
+<div class="card">
+<h2>520</h2>
+<p>Total Students</p>
+</div>
+
+<div class="card">
+<h2>35</h2>
+<p>Faculty</p>
+</div>
+
+<div class="card">
+<h2>12</h2>
+<p>Courses</p>
+</div>
+
+<div class="card">
+<h2>150</h2>
+<p>Admissions</p>
+</div>
+
+</div>
+
+<!-- Monitoring Chart -->
+
+<div class="chart-box">
+
+<h2>Student Distribution by Course</h2>
+
+<canvas id="studentChart"></canvas>
+
+</div>
+
+</div>
+
+<script>
+
+const ctx = document.getElementById('studentChart');
+
+new Chart(ctx, {
+
+type: 'bar',
+
+data: {
+labels: ['BCA', 'B.Com', 'BBA'],
+datasets: [{
+label: 'Number of Students',
+data: [200, 180, 140],
+borderWidth: 1
+}]
+},
+
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+
+});
+
+</script>
+
+</body>
+</html>
