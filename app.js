@@ -1,312 +1,128 @@
-const express = require("express");
-const os = require("os");
-const app = express();
-
-const PORT = process.env.PORT || 10000;
-const VERSION = "1.1.0";
-
-let requestCount = 0;
-let requestHistory = [];
-
-// Logging + request counter middleware
-app.use((req, res, next) => {
-
-  requestCount++;
-
-  requestHistory.push({
-    time: new Date().toLocaleTimeString(),
-    count: requestCount
-  });
-
-  if (requestHistory.length > 20) {
-    requestHistory.shift();
-  }
-
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-  next();
-
-});
-
-
-// Root route
-app.get("/", (req, res) => {
-  res.send("DevOps CI Verified 🚀");
-});
-
-
-// Status route
-app.get("/status", (req, res) => {
-  res.send("Server status: Running successfully 🚀");
-});
-
-
-// Health route
-app.get("/health", (req, res) => {
-  res.json({
-    status: "OK",
-    service: "Varshini DevOps Project",
-    time: new Date(),
-    uptime: process.uptime()
-  });
-});
-
-
-// Version route
-app.get("/version", (req, res) => {
-  res.json({
-    version: VERSION,
-    deployed_at: new Date(),
-    service: "Varshini DevOps Project"
-  });
-});
-
-
-// Metrics route
-app.get("/metrics", (req, res) => {
-
-  const memory = process.memoryUsage();
-
-  res.json({
-    uptime: process.uptime(),
-    platform: process.platform,
-    node_version: process.version,
-    cpu_count: os.cpus().length,
-    memory: {
-      rss: memory.rss,
-      heapUsed: memory.heapUsed,
-      heapTotal: memory.heapTotal
-    }
-  });
-
-});
-
-
-// Total request counter
-app.get("/requests", (req, res) => {
-  res.json({
-    total_requests: requestCount
-  });
-});
-
-
-// Request history for graph
-app.get("/request-stats", (req, res) => {
-  res.json(requestHistory);
-});
-
-
-// Dashboard
-app.get("/dashboard", (req, res) => {
-
-res.send(`
+<!DOCTYPE html>
 <html>
-
 <head>
-
-<title>DevOps Monitoring Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Sarvodaya Institute of Graduate Studies</title>
 
 <style>
 
 body{
-  font-family: Arial;
-  background:#0f172a;
-  color:white;
-  text-align:center;
-  padding:40px;
+font-family: Arial;
+margin:0;
+background:#f4f4f4;
 }
 
-.container{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+header{
+background:#003366;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+nav{
+background:#0055a5;
+padding:12px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.banner{
+background:#cccccc;
+height:250px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+font-weight:bold;
+}
+
+.section{
+padding:40px;
+text-align:center;
+}
+
+.courses{
+display:flex;
+justify-content:center;
+gap:20px;
 }
 
 .card{
-  background:#1e293b;
-  padding:20px;
-  margin:15px;
-  border-radius:10px;
-  width:220px;
+background:white;
+padding:20px;
+width:200px;
+box-shadow:0 0 10px gray;
+border-radius:8px;
 }
 
-canvas{
-  background:white;
-  border-radius:10px;
-  margin-top:30px;
+footer{
+background:#003366;
+color:white;
+text-align:center;
+padding:15px;
 }
 
 </style>
 
 </head>
 
-
 <body>
 
-<h1>🚀 DevOps Monitoring Dashboard</h1>
+<header>
+<h1>Sarvodaya Institute of Graduate Studies</h1>
+</header>
 
-<div class="container">
+<nav>
+<a href="#">Home</a>
+<a href="#">About</a>
+<a href="#">Courses</a>
+<a href="#">Facilities</a>
+<a href="#">Gallery</a>
+<a href="#">Contact</a>
+</nav>
+
+<div class="banner">
+Welcome to Sarvodaya Institute of Graduate Studies
+</div>
+
+<div class="section">
+
+<h2>Courses Offered</h2>
+
+<div class="courses">
 
 <div class="card">
-<h3>Uptime</h3>
-<p id="uptime">Loading...</p>
+<h3>BCA</h3>
+<p>Artificial Intelligence & Machine Learning</p>
 </div>
 
 <div class="card">
-<h3>Platform</h3>
-<p id="platform">Loading...</p>
+<h3>B.Com</h3>
+<p>Commerce</p>
 </div>
 
 <div class="card">
-<h3>Node Version</h3>
-<p id="node">Loading...</p>
-</div>
-
-<div class="card">
-<h3>CPU Cores</h3>
-<p id="cpu">Loading...</p>
-</div>
-
-<div class="card">
-<h3>Total Requests</h3>
-<p id="requests">Loading...</p>
+<h3>BBA</h3>
+<p>Business Administration</p>
 </div>
 
 </div>
 
+</div>
 
-<h2>Memory Usage</h2>
+<div class="section">
+<h2>Facilities</h2>
+<p>Computer Lab • Library • Smart Classrooms • Industrial Visits</p>
+</div>
 
-<canvas id="memoryChart" width="600" height="300"></canvas>
-
-
-<h2>Request Traffic</h2>
-
-<canvas id="requestChart" width="600" height="300"></canvas>
-
-
-
-<script>
-
-let memoryChart;
-let requestChart;
-
-
-// Memory dashboard update
-async function updateDashboard(){
-
-  const res = await fetch('/metrics');
-  const data = await res.json();
-
-  const req = await fetch('/requests');
-  const reqData = await req.json();
-
-  document.getElementById("uptime").innerText =
-      data.uptime.toFixed(2) + " seconds";
-
-  document.getElementById("platform").innerText =
-      data.platform;
-
-  document.getElementById("node").innerText =
-      data.node_version;
-
-  document.getElementById("cpu").innerText =
-      data.cpu_count;
-
-  document.getElementById("requests").innerText =
-      reqData.total_requests;
-
-
-  const heap = data.memory.heapUsed / 1024 / 1024;
-  const rss = data.memory.rss / 1024 / 1024;
-
-  if(!memoryChart){
-
-    const ctx = document.getElementById('memoryChart');
-
-    memoryChart = new Chart(ctx,{
-      type:'line',
-      data:{
-        labels:[],
-        datasets:[{
-          label:'Heap Used (MB)',
-          data:[],
-          borderColor:'red'
-        },{
-          label:'RSS Memory (MB)',
-          data:[],
-          borderColor:'blue'
-        }]
-      }
-    });
-
-  }
-
-  const time = new Date().toLocaleTimeString();
-
-  memoryChart.data.labels.push(time);
-  memoryChart.data.datasets[0].data.push(heap);
-  memoryChart.data.datasets[1].data.push(rss);
-
-  memoryChart.update();
-
-}
-
-
-
-// Request traffic graph
-async function updateRequestGraph(){
-
-  const res = await fetch('/request-stats');
-  const data = await res.json();
-
-  if(!requestChart){
-
-    const ctx = document.getElementById("requestChart");
-
-    requestChart = new Chart(ctx,{
-      type:"line",
-      data:{
-        labels:[],
-        datasets:[{
-          label:"Total Requests",
-          data:[],
-          borderColor:"orange"
-        }]
-      }
-    });
-
-  }
-
-  requestChart.data.labels = data.map(d => d.time);
-  requestChart.data.datasets[0].data = data.map(d => d.count);
-
-  requestChart.update();
-
-}
-
-
-
-updateDashboard();
-updateRequestGraph();
-
-setInterval(updateDashboard,3000);
-setInterval(updateRequestGraph,2000);
-
-</script>
-
+<footer>
+<p>© 2026 Sarvodaya Institute of Graduate Studies</p>
+</footer>
 
 </body>
-
 </html>
-
-`);
-
-});
-
-
-
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
-});
