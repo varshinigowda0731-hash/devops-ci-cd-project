@@ -1,129 +1,110 @@
 const express = require("express");
 const os = require("os");
-
 const app = express();
 
 const PORT = process.env.PORT || 10000;
-const VERSION = "1.2.0";
+const VERSION = "1.1.0";
 
 let requestCount = 0;
 let requestHistory = [];
 
+/* Disable browser caching */
+app.use((req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+});
 
-/* ================================
-   Request Counter + Logging
-================================ */
+/* Logging + request counter middleware */
+app.use((req, res, next) => {
 
-app.use((req,res,next)=>{
+  requestCount++;
 
-    requestCount++;
+  requestHistory.push({
+    time: new Date().toLocaleTimeString(),
+    count: requestCount
+  });
 
-    requestHistory.push({
-        time: new Date().toLocaleTimeString(),
-        count: requestCount
-    });
+  if (requestHistory.length > 20) {
+    requestHistory.shift();
+  }
 
-    if(requestHistory.length > 20){
-        requestHistory.shift();
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+
+});
+
+
+/* Root route */
+app.get("/", (req, res) => {
+  res.send("DevOps CI Verified 🚀");
+});
+
+
+/* Status route */
+app.get("/status", (req, res) => {
+  res.send("Server status: Running successfully 🚀");
+});
+
+
+/* Health route */
+app.get("/health", (req, res) => {
+  res.json({
+    status: "OK",
+    service: "Varshini DevOps Project",
+    time: new Date(),
+    uptime: process.uptime()
+  });
+});
+
+
+/* Version route */
+app.get("/version", (req, res) => {
+  res.json({
+    version: VERSION,
+    deployed_at: new Date(),
+    service: "Varshini DevOps Project"
+  });
+});
+
+
+/* Metrics route */
+app.get("/metrics", (req, res) => {
+
+  const memory = process.memoryUsage();
+
+  res.json({
+    uptime: process.uptime(),
+    platform: process.platform,
+    node_version: process.version,
+    cpu_count: os.cpus().length,
+    memory: {
+      rss: memory.rss,
+      heapUsed: memory.heapUsed,
+      heapTotal: memory.heapTotal
     }
-
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-
-    next();
+  });
 
 });
 
 
-/* ================================
-   Basic Routes
-================================ */
-
-app.get("/", (req,res)=>{
-    res.send("🚀 DevOps CI/CD Platform Running");
+/* Total request counter */
+app.get("/requests", (req, res) => {
+  res.json({
+    total_requests: requestCount
+  });
 });
 
 
-app.get("/status",(req,res)=>{
-    res.send("Server Status : Running Successfully 🚀");
+/* Request history for graph */
+app.get("/request-stats", (req, res) => {
+  res.json(requestHistory);
 });
 
 
-app.get("/health",(req,res)=>{
-
-    res.json({
-        status:"OK",
-        service:"Varshini DevOps Project",
-        time:new Date(),
-        uptime:process.uptime()
-    });
-
-});
-
-
-app.get("/version",(req,res)=>{
-
-    res.json({
-        version:VERSION,
-        deployed_at:new Date(),
-        service:"Varshini DevOps Project"
-    });
-
-});
-
-
-/* ================================
-   Metrics API
-================================ */
-
-app.get("/metrics",(req,res)=>{
-
-    const memory = process.memoryUsage();
-
-    res.json({
-
-        uptime:process.uptime(),
-
-        platform:process.platform,
-
-        node_version:process.version,
-
-        cpu_count:os.cpus().length,
-
-        memory:{
-            rss:memory.rss,
-            heapUsed:memory.heapUsed,
-            heapTotal:memory.heapTotal
-        }
-
-    });
-
-});
-
-
-/* ================================
-   Request APIs
-================================ */
-
-app.get("/requests",(req,res)=>{
-    res.json({
-        total_requests:requestCount
-    });
-});
-
-
-app.get("/request-stats",(req,res)=>{
-    res.json(requestHistory);
-});
-
-
-/* ================================
-   Monitoring Dashboard
-================================ */
-
-app.get("/dashboard",(req,res)=>{
+/* Dashboard */
+app.get("/dashboard", (req, res) => {
 
 res.send(`
-
 <html>
 
 <head>
@@ -135,31 +116,31 @@ res.send(`
 <style>
 
 body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-text-align:center;
-padding:40px;
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  padding:40px;
 }
 
 .container{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
 .card{
-background:#1e293b;
-padding:20px;
-margin:15px;
-border-radius:10px;
-width:220px;
+  background:#1e293b;
+  padding:20px;
+  margin:15px;
+  border-radius:10px;
+  width:220px;
 }
 
 canvas{
-background:white;
-border-radius:10px;
-margin-top:30px;
+  background:white;
+  border-radius:10px;
+  margin-top:30px;
 }
 
 </style>
@@ -170,7 +151,6 @@ margin-top:30px;
 <body>
 
 <h1>🚀 DevOps Monitoring Dashboard</h1>
-
 
 <div class="container">
 
@@ -204,12 +184,12 @@ margin-top:30px;
 
 <h2>Memory Usage</h2>
 
-<canvas id="memoryChart" width="700" height="300"></canvas>
+<canvas id="memoryChart" width="600" height="300"></canvas>
 
 
 <h2>Request Traffic</h2>
 
-<canvas id="requestChart" width="700" height="300"></canvas>
+<canvas id="requestChart" width="600" height="300"></canvas>
 
 
 
@@ -219,117 +199,98 @@ let memoryChart;
 let requestChart;
 
 
-/* =============================
-   Update System Metrics
-============================= */
-
+/* Memory dashboard update */
 async function updateDashboard(){
 
-const res = await fetch('/metrics');
-const data = await res.json();
+  const res = await fetch('/metrics');
+  const data = await res.json();
 
-const req = await fetch('/requests');
-const reqData = await req.json();
+  const req = await fetch('/requests');
+  const reqData = await req.json();
 
+  document.getElementById("uptime").innerText =
+      data.uptime.toFixed(2) + " seconds";
 
-document.getElementById("uptime").innerText =
-data.uptime.toFixed(2) + " seconds";
+  document.getElementById("platform").innerText =
+      data.platform;
 
-document.getElementById("platform").innerText =
-data.platform;
+  document.getElementById("node").innerText =
+      data.node_version;
 
-document.getElementById("node").innerText =
-data.node_version;
+  document.getElementById("cpu").innerText =
+      data.cpu_count;
 
-document.getElementById("cpu").innerText =
-data.cpu_count;
-
-document.getElementById("requests").innerText =
-reqData.total_requests;
-
-
-const heap = data.memory.heapUsed / 1024 / 1024;
-const rss = data.memory.rss / 1024 / 1024;
+  document.getElementById("requests").innerText =
+      reqData.total_requests;
 
 
-if(!memoryChart){
+  const heap = data.memory.heapUsed / 1024 / 1024;
+  const rss = data.memory.rss / 1024 / 1024;
 
-const ctx = document.getElementById("memoryChart");
+  if(!memoryChart){
 
-memoryChart = new Chart(ctx,{
-type:"line",
-data:{
-labels:[],
-datasets:[
-{
-label:"Heap Used (MB)",
-data:[],
-borderColor:"red"
-},
-{
-label:"RSS Memory (MB)",
-data:[],
-borderColor:"blue"
-}
-]
-}
-});
+    const ctx = document.getElementById('memoryChart');
 
-}
+    memoryChart = new Chart(ctx,{
+      type:'line',
+      data:{
+        labels:[],
+        datasets:[{
+          label:'Heap Used (MB)',
+          data:[],
+          borderColor:'red'
+        },{
+          label:'RSS Memory (MB)',
+          data:[],
+          borderColor:'blue'
+        }]
+      }
+    });
 
+  }
 
-const time = new Date().toLocaleTimeString();
+  const time = new Date().toLocaleTimeString();
 
-memoryChart.data.labels.push(time);
-memoryChart.data.datasets[0].data.push(heap);
-memoryChart.data.datasets[1].data.push(rss);
+  memoryChart.data.labels.push(time);
+  memoryChart.data.datasets[0].data.push(heap);
+  memoryChart.data.datasets[1].data.push(rss);
 
-memoryChart.update();
+  memoryChart.update();
 
 }
 
 
-
-/* =============================
-   Update Request Graph
-============================= */
-
+/* Request traffic graph */
 async function updateRequestGraph(){
 
-const res = await fetch('/request-stats');
-const data = await res.json();
+  const res = await fetch('/request-stats');
+  const data = await res.json();
 
-if(!requestChart){
+  if(!requestChart){
 
-const ctx = document.getElementById("requestChart");
+    const ctx = document.getElementById("requestChart");
 
-requestChart = new Chart(ctx,{
-type:"line",
-data:{
-labels:[],
-datasets:[
-{
-label:"Total Requests",
-data:[],
-borderColor:"orange"
-}
-]
-}
-});
+    requestChart = new Chart(ctx,{
+      type:"line",
+      data:{
+        labels:[],
+        datasets:[{
+          label:"Total Requests",
+          data:[],
+          borderColor:"orange"
+        }]
+      }
+    });
 
-}
+  }
 
-requestChart.data.labels = data.map(d=>d.time);
-requestChart.data.datasets[0].data = data.map(d=>d.count);
+  requestChart.data.labels = data.map(d => d.time);
+  requestChart.data.datasets[0].data = data.map(d => d.count);
 
-requestChart.update();
+  requestChart.update();
 
 }
 
-
-/* =============================
-   Run Dashboard
-============================= */
 
 updateDashboard();
 updateRequestGraph();
@@ -349,10 +310,6 @@ setInterval(updateRequestGraph,2000);
 });
 
 
-/* ================================
-   Start Server
-================================ */
-
-app.listen(PORT,()=>{
-console.log("Server running on port " + PORT);
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
